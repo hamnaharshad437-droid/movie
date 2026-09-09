@@ -26,384 +26,517 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
 
-    :root {
-        --bg-main: #05070D;
-        --bg-secondary: #08111F;
-        --bg-card: #0B1628;
-        --primary-blue: #123B73;
-        --accent-blue: #1677FF;
-        --bright-blue: #2D8CFF;
-        --text-white: #FFFFFF;
-        --text-muted: #A7B0C0;
-        --border-subtle: #1A2B45;
-        --badge-gold: #FFB800;
-    }
+:root {
+    --bg-main: #07090D;
+    --bg-secondary: #0D1118;
+    --bg-card: #111720;
+    --bg-card-soft: #151C26;
+    --primary-blue: #193B5A;
+    --accent-blue: #4E9FE6;
+    --bright-blue: #79BDF2;
+    --text-white: #F5F7FA;
+    --text-muted: #9BA7B5;
+    --border-subtle: #27313D;
+    --border-soft: #1C2530;
+    --badge-gold: #D7A84B;
+    --danger: #C86A6A;
+}
 
-    html, body, [class*="css"] {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background-color: var(--bg-main) !important;
-        color: var(--text-white) !important;
-    }
+html, body, [class*="css"] {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-main) !important;
+    color: var(--text-white) !important;
+}
 
+body {
+    letter-spacing: 0.01em;
+}
+
+.block-container {
+    padding-top: 2rem !important;
+    padding-bottom: 4rem !important;
+    max-width: 1380px !important;
+}
+
+/* Remove Streamlit chrome that makes the app feel like a prototype */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header[data-testid="stHeader"] {
+    background: rgba(7, 9, 13, 0.88) !important;
+}
+div[data-testid="stToolbar"] { display: none; }
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: #0B0F15 !important;
+    border-right: 1px solid var(--border-soft) !important;
+}
+
+section[data-testid="stSidebar"] .block-container {
+    padding: 1.6rem 1.15rem 2rem !important;
+}
+
+section[data-testid="stSidebar"] [data-testid="stRadio"] > label {
+    display: none;
+}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] {
+    gap: 4px;
+}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label {
+    border-radius: 8px !important;
+    padding: 9px 11px !important;
+    color: #AAB4C0 !important;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
+    background: #151B24 !important;
+    color: #F5F7FA !important;
+}
+
+section[data-testid="stSidebar"] div[role="radiogroup"] label[data-checked="true"] {
+    background: #182331 !important;
+    color: #F5F7FA !important;
+    box-shadow: inset 3px 0 0 var(--accent-blue);
+}
+
+section[data-testid="stSidebar"] hr {
+    border-color: var(--border-soft) !important;
+}
+
+/* Brand */
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 0 1.25rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.brand-icon {
+    font-size: 1.35rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #162B3E;
+    border: 1px solid #2B526F;
+    box-shadow: none;
+}
+
+.brand-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    color: #F5F7FA;
+    line-height: 1.1;
+}
+
+.brand-subtitle {
+    font-size: 0.67rem;
+    color: #7396B3;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+/* Buttons */
+.stButton > button {
+    background: #17212D !important;
+    color: #EAF0F5 !important;
+    border: 1px solid #2B3745 !important;
+    border-radius: 7px !important;
+    min-height: 38px !important;
+    padding: 0.42rem 0.95rem !important;
+    font-weight: 700 !important;
+    font-size: 0.86rem !important;
+    transition: all 0.18s ease !important;
+    box-shadow: none !important;
+}
+
+.stButton > button:hover {
+    background: #203143 !important;
+    border-color: #4B7594 !important;
+    color: #F5F7FA !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 5px 16px rgba(0,0,0,0.28) !important;
+}
+
+.stButton > button[kind="primary"] {
+    background: #2A628F !important;
+    border-color: #3979A9 !important;
+    color: #F5F7FA !important;
+}
+
+.stButton > button[kind="primary"]:hover {
+    background: #3478A9 !important;
+    border-color: #5A9BC6 !important;
+}
+
+.stButton > button[kind="secondary"] {
+    background: #121922 !important;
+    border-color: #2B3745 !important;
+    color: #C7D0D9 !important;
+}
+
+/* Inputs */
+.stTextInput > div > div > input,
+.stSelectbox > div > div,
+.stMultiSelect > div > div,
+.stNumberInput > div > div > input {
+    background: #10161E !important;
+    border: 1px solid #293440 !important;
+    color: #F5F7FA !important;
+    border-radius: 7px !important;
+}
+
+.stTextInput > div > div > input:focus {
+    border-color: #4D86AA !important;
+    box-shadow: 0 0 0 1px #4D86AA !important;
+}
+
+[data-baseweb="select"] > div {
+    background: #10161E !important;
+    border-color: #293440 !important;
+}
+
+[data-baseweb="popover"],
+[data-baseweb="menu"] {
+    background: #121922 !important;
+    border: 1px solid #293440 !important;
+}
+
+[data-baseweb="menu"] li:hover {
+    background: #1B2835 !important;
+}
+
+/* Slider */
+.stSlider [data-baseweb="slider"] [role="slider"] {
+    background: #79BDF2 !important;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #F5F7FA !important;
+    letter-spacing: -0.025em;
+}
+
+h1 {
+    font-weight: 800 !important;
+}
+
+h2, h3 {
+    font-weight: 750 !important;
+}
+
+.stMarkdown p {
+    color: #B5BEC9;
+}
+
+/* Movie cards */
+.movie-card-container {
+    background: #10161E;
+    border: 1px solid #202B36;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 0.65rem;
+    position: relative;
+}
+
+.movie-card-container:hover {
+    transform: translateY(-4px);
+    border-color: #3E6078;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.38);
+}
+
+.movie-poster-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 150%;
+    overflow: hidden;
+    background: #080B10;
+}
+
+.movie-poster-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.movie-card-container:hover .movie-poster-img {
+    transform: scale(1.035);
+    filter: brightness(1.05);
+}
+
+.movie-card-content {
+    padding: 12px 13px 13px;
+}
+
+.movie-card-title {
+    font-size: 0.92rem;
+    font-weight: 750;
+    color: #F2F5F7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+}
+
+.movie-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.77rem;
+    color: #8F9BA8;
+    margin-bottom: 7px;
+}
+
+.rating-badge {
+    background: rgba(215, 168, 75, 0.10);
+    border: 1px solid rgba(215, 168, 75, 0.30);
+    color: #E0B861;
+    font-weight: 800;
+    font-size: 0.74rem;
+    padding: 2px 7px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.genre-pill {
+    background: #192B3A;
+    color: #9FC6E3;
+    border: 1px solid #294255;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+/* Hero */
+.hero-banner {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #10161E;
+    border: 1px solid #202B36;
+    margin-bottom: 1.6rem;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.42);
+}
+
+.hero-backdrop {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.92);
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(7,9,13,0.97) 0%, rgba(7,9,13,0.83) 36%, rgba(7,9,13,0.22) 78%, rgba(7,9,13,0.05) 100%),
+        linear-gradient(0deg, rgba(7,9,13,0.94) 0%, rgba(7,9,13,0.22) 52%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.25rem 2.6rem;
+}
+
+.hero-tagline {
+    color: #82A9C5;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2.2px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.9rem;
+    font-weight: 700;
+    color: #F5F7FA;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.65);
+}
+
+.hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.84rem;
+    color: #AAB4BF;
+    margin-bottom: 13px;
+}
+
+.hero-overview {
+    max-width: 670px;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: #D2D8DE;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+/* Detail page */
+.details-backdrop-header {
+    position: relative;
+    width: 100%;
+    height: 390px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 1.7rem;
+    border: 1px solid #202B36;
+}
+
+.details-backdrop-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.88);
+}
+
+.details-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #07090D 7%, rgba(7,9,13,0.68) 55%, rgba(7,9,13,0.18) 100%);
+}
+
+.stat-card {
+    background: #10161E;
+    border: 1px solid #222D38;
+    border-radius: 7px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.9rem;
+}
+
+.stat-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #8995A2;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.stat-val {
+    font-size: 1.05rem;
+    font-weight: 750;
+    color: #F2F5F7;
+}
+
+.cast-card {
+    background: #10161E;
+    border: 1px solid #222D38;
+    border-radius: 7px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 9px;
+    transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.cast-card:hover {
+    transform: translateY(-3px);
+    border-color: #3E6078;
+}
+
+.cast-img {
+    width: 100%;
+    height: 155px;
+    object-fit: cover;
+    background: #080B10;
+}
+
+.cast-name {
+    font-size: 0.8rem;
+    font-weight: 750;
+    color: #F1F4F6;
+    margin-top: 7px;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cast-char {
+    font-size: 0.7rem;
+    color: #8995A2;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Tabs, alerts and expanders */
+button[data-baseweb="tab"] {
+    color: #8F9BA8 !important;
+    font-weight: 700 !important;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: #D9E6EF !important;
+}
+
+div[data-testid="stAlert"] {
+    background: #111922 !important;
+    border: 1px solid #293744 !important;
+    color: #C6D0D9 !important;
+}
+
+details {
+    border-color: #293440 !important;
+    background: #0F151D !important;
+}
+
+.stProgress > div > div > div {
+    background: #4E9FE6 !important;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
     .block-container {
-        padding-top: 1.5rem !important;
-        padding-bottom: 3.5rem !important;
-        max-width: 1350px !important;
-    }
-
-    /* Sidebar Styling */
-    section[data-testid="stSidebar"] {
-        background-color: var(--bg-secondary) !important;
-        border-right: 1px solid var(--border-subtle) !important;
-    }
-
-    section[data-testid="stSidebar"] .block-container {
-        padding-top: 2rem !important;
-        padding-left: 1.2rem !important;
-        padding-right: 1.2rem !important;
-    }
-
-    /* Brand Header */
-    .brand-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding-bottom: 1.2rem;
-        margin-bottom: 1.5rem;
-        border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .brand-icon {
-        font-size: 2rem;
-        background: linear-gradient(135deg, #1677FF, #123B73);
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        box-shadow: 0 4px 14px rgba(22, 119, 255, 0.4);
-    }
-
-    .brand-title {
-        font-size: 1.35rem;
-        font-weight: 800;
-        letter-spacing: 1px;
-        color: #FFFFFF;
-        line-height: 1.1;
-    }
-
-    .brand-subtitle {
-        font-size: 0.75rem;
-        color: var(--bright-blue);
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        font-weight: 600;
-    }
-
-    /* Streamlit Buttons */
-    .stButton > button {
-        background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-blue) 100%) !important;
-        color: #FFFFFF !important;
-        border: 1px solid rgba(45, 140, 255, 0.4) !important;
-        border-radius: 8px !important;
-        padding: 0.45rem 1rem !important;
-        font-weight: 600 !important;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-        width: 100%;
-    }
-
-    .stButton > button:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 6px 20px rgba(22, 119, 255, 0.45) !important;
-        border-color: var(--bright-blue) !important;
-        color: #FFFFFF !important;
-    }
-
-    .stButton > button[kind="secondary"] {
-        background: var(--bg-card) !important;
-        border: 1px solid var(--border-subtle) !important;
-        color: var(--text-white) !important;
-    }
-
-    .stButton > button[kind="secondary"]:hover {
-        border-color: var(--bright-blue) !important;
-        background: var(--bg-secondary) !important;
-    }
-
-    /* Inputs & Dropdowns */
-    .stTextInput > div > div > input,
-    .stSelectbox > div > div,
-    .stMultiSelect > div > div {
-        background-color: var(--bg-card) !important;
-        border: 1px solid var(--border-subtle) !important;
-        color: #FFFFFF !important;
-        border-radius: 8px !important;
-    }
-
-    .stTextInput > div > div > input:focus {
-        border-color: var(--bright-blue) !important;
-        box-shadow: 0 0 0 2px rgba(45, 140, 255, 0.25) !important;
-    }
-
-    /* Movie Card Component */
-    .movie-card-container {
-        background-color: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: 12px;
-        overflow: hidden;
-        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-        margin-bottom: 0.6rem;
-        position: relative;
-    }
-
-    .movie-card-container:hover {
-        transform: translateY(-5px);
-        border-color: var(--bright-blue);
-        box-shadow: 0 10px 25px rgba(22, 119, 255, 0.25);
-    }
-
-    .movie-poster-wrap {
-        position: relative;
-        width: 100%;
-        padding-top: 150%;
-        overflow: hidden;
-        background-color: #030509;
-    }
-
-    .movie-poster-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .movie-card-container:hover .movie-poster-img {
-        transform: scale(1.04);
-    }
-
-    .movie-card-content {
-        padding: 12px 14px;
-    }
-
-    .movie-card-title {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: #FFFFFF;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom: 4px;
-    }
-
-    .movie-card-meta {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-bottom: 6px;
-    }
-
-    .rating-badge {
-        background: rgba(22, 119, 255, 0.15);
-        border: 1px solid rgba(45, 140, 255, 0.35);
-        color: var(--badge-gold);
-        font-weight: 700;
-        font-size: 0.78rem;
-        padding: 2px 7px;
-        border-radius: 6px;
-        display: inline-flex;
-        align-items: center;
-        gap: 3px;
-    }
-
-    .genre-pill {
-        background-color: var(--primary-blue);
-        color: #FFFFFF;
-        font-size: 0.72rem;
-        font-weight: 600;
-        padding: 2px 8px;
-        border-radius: 12px;
-        display: inline-block;
-        white-space: nowrap;
-    }
-
-    /* Hero Section Banner */
-    .hero-banner {
-        position: relative;
-        width: 100%;
-        border-radius: 16px;
-        overflow: hidden;
-        background-color: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        margin-bottom: 2rem;
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+        padding: 1rem 0.8rem 3rem !important;
     }
 
     .hero-backdrop {
-        width: 100%;
-        height: 440px;
-        object-fit: cover;
-        display: block;
+        height: 360px;
     }
 
     .hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(
-            to right,
-            rgba(5, 7, 13, 0.96) 0%,
-            rgba(8, 17, 31, 0.85) 45%,
-            rgba(5, 7, 13, 0.3) 100%
-        ),
-        linear-gradient(
-            to top,
-            rgba(5, 7, 13, 1) 0%,
-            rgba(5, 7, 13, 0.4) 40%,
-            transparent 100%
-        );
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        padding: 2.2rem 2.5rem;
-    }
-
-    .hero-tagline {
-        color: var(--bright-blue);
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 700;
-        margin-bottom: 6px;
+        padding: 1.35rem;
     }
 
     .hero-title {
-        font-size: 2.5rem;
-        font-weight: 800;
-        color: #FFFFFF;
-        line-height: 1.15;
-        margin-bottom: 12px;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+        font-size: 2rem;
     }
 
-    .hero-meta {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        margin-bottom: 14px;
-    }
-
-    .hero-overview {
-        max-width: 680px;
-        font-size: 0.95rem;
-        line-height: 1.6;
-        color: #E2E8F0;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        margin-bottom: 18px;
-    }
-
-    /* Details Page Header & Cards */
     .details-backdrop-header {
-        position: relative;
-        width: 100%;
-        height: 380px;
-        border-radius: 16px;
-        overflow: hidden;
-        margin-bottom: 2rem;
-        border: 1px solid var(--border-subtle);
+        height: 280px;
     }
-
-    .details-backdrop-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .details-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, #05070D 10%, rgba(8, 17, 31, 0.7) 60%, rgba(5, 7, 13, 0.3) 100%);
-    }
-
-    .stat-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: 10px;
-        padding: 1rem 1.2rem;
-        margin-bottom: 1rem;
-    }
-
-    .stat-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: var(--text-muted);
-        margin-bottom: 4px;
-    }
-
-    .stat-val {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: #FFFFFF;
-    }
-
-    .cast-card {
-        background-color: var(--bg-card);
-        border: 1px solid var(--border-subtle);
-        border-radius: 10px;
-        overflow: hidden;
-        text-align: center;
-        padding-bottom: 8px;
-        transition: transform 0.2s ease;
-    }
-
-    .cast-card:hover {
-        transform: translateY(-3px);
-        border-color: var(--bright-blue);
-    }
-
-    .cast-img {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        background-color: #030509;
-    }
-
-    .cast-name {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: #FFFFFF;
-        margin-top: 6px;
-        padding: 0 4px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .cast-char {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        padding: 0 4px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    </style>
+}
+</style>
     """,
     unsafe_allow_html=True,
 )
@@ -1014,9 +1147,9 @@ def render_movie_grid(movies: List[Dict[str, Any]], cols_per_row: int = 4, key_p
     if not movies:
         st.markdown(
             """
-            <div style="text-align: center; padding: 2.5rem 1rem; color: #A7B0C0; background: #0B1628; border-radius: 12px; border: 1px dashed #1A2B45;">
+            <div style="text-align: center; padding: 2.5rem 1rem; color: #9BA7B5; background: #111720; border-radius: 12px; border: 1px dashed #27313D;">
                 <div style="font-size: 2.5rem; margin-bottom: 8px;">🎬</div>
-                <h3 style="color: #FFFFFF; margin-bottom: 4px;">No movies found</h3>
+                <h3 style="color: #F5F7FA; margin-bottom: 4px;">No movies found</h3>
                 <p>Try adjusting your search query, genre, or rating filters.</p>
             </div>
             """,
@@ -1113,7 +1246,7 @@ def render_movie_details(movie_id: int):
     with c_post:
         st.markdown(
             f"""
-            <div style="border-radius: 12px; overflow: hidden; border: 2px solid #1A2B45; box-shadow: 0 10px 30px rgba(0,0,0,0.7); margin-top: -80px; position: relative; z-index: 10;">
+            <div style="border-radius: 12px; overflow: hidden; border: 2px solid #27313D; box-shadow: 0 10px 30px rgba(0,0,0,0.7); margin-top: -80px; position: relative; z-index: 10;">
                 <img src="{poster}" alt="{title}" style="width: 100%; display: block;" />
             </div>
             """,
@@ -1128,13 +1261,13 @@ def render_movie_details(movie_id: int):
     with c_info:
         st.markdown(f"<h1>{title}</h1>", unsafe_allow_html=True)
         if tagline:
-            st.markdown(f"<p style='color: #2D8CFF; font-style: italic; font-size: 1.05rem;'>\"{tagline}\"</p>", unsafe_allow_html=True)
+            st.markdown(f"<p style='color: #79BDF2; font-style: italic; font-size: 1.05rem;'>\"{tagline}\"</p>", unsafe_allow_html=True)
         st.markdown(
             f"""
             <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px;">
                 <span class="rating-badge" style="font-size: 0.95rem; padding: 4px 10px;">⭐ {rating:.1f} ({vote_count:,} votes)</span>
-                <span style="color: #A7B0C0;">📅 {release_date}</span>
-                <span style="color: #A7B0C0;">⏱️ {runtime}</span>
+                <span style="color: #9BA7B5;">📅 {release_date}</span>
+                <span style="color: #9BA7B5;">⏱️ {runtime}</span>
             </div>
             """,
             unsafe_allow_html=True,
@@ -1254,7 +1387,7 @@ with st.sidebar.expander("🔑 TMDB API Key", expanded=not is_api_configured()):
     if is_api_configured():
         st.markdown(
             """
-            <div style="background: rgba(22, 119, 255, 0.15); border: 1px solid #1677FF; padding: 10px; border-radius: 8px; font-size: 0.82rem;">
+            <div style="background: rgba(22, 119, 255, 0.15); border: 1px solid #4E9FE6; padding: 10px; border-radius: 8px; font-size: 0.82rem;">
                 🟢 <b>Live TMDB API Active</b><br>
                 Connected to 800,000+ live movies.
             </div>
@@ -1267,7 +1400,7 @@ with st.sidebar.expander("🔑 TMDB API Key", expanded=not is_api_configured()):
     else:
         st.markdown(
             """
-            <div style="background: rgba(255, 184, 0, 0.1); border: 1px solid #FFB800; padding: 10px; border-radius: 8px; font-size: 0.82rem; margin-bottom: 8px;">
+            <div style="background: rgba(255, 184, 0, 0.1); border: 1px solid #D7A84B; padding: 10px; border-radius: 8px; font-size: 0.82rem; margin-bottom: 8px;">
                 🟡 <b>Curated Demo Mode</b><br>
                 Enter your free TMDB API key to query live movies.
             </div>
@@ -1284,7 +1417,7 @@ st.sidebar.markdown("---")
 
 # Downloadable Files Expander in App
 with st.sidebar.expander("📥 Download App Files", expanded=False):
-    st.markdown("<p style='font-size: 0.8rem; color: #A7B0C0;'>Download source files directly:</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size: 0.8rem; color: #9BA7B5;'>Download source files directly:</p>", unsafe_allow_html=True)
     try:
         with open(__file__, "r", encoding="utf-8") as f_app:
             app_code = f_app.read()
@@ -1309,7 +1442,7 @@ with st.sidebar.expander("📥 Download App Files", expanded=False):
 
 st.sidebar.markdown(
     """
-    <div style="font-size: 0.75rem; color: #A7B0C0; text-align: center; margin-top: 2rem;">
+    <div style="font-size: 0.75rem; color: #9BA7B5; text-align: center; margin-top: 2rem;">
         Powered by <b>The Movie Database</b><br>
         Movie Hub &copy; 2026
     </div>
@@ -1345,7 +1478,7 @@ elif st.session_state.current_page == "🏠 Home":
 
 elif st.session_state.current_page == "🔥 Trending":
     st.markdown("# 🔥 Trending Movies")
-    st.markdown("<p style='color: #A7B0C0; margin-top: -10px;'>Films capturing global audience attention.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #9BA7B5; margin-top: -10px;'>Films capturing global audience attention.</p>", unsafe_allow_html=True)
     c_w, c_g = st.columns([2, 2])
     with c_w:
         t_frame = st.radio("Window", ["Trending Today", "Trending This Week"], horizontal=True, label_visibility="collapsed")
@@ -1361,17 +1494,17 @@ elif st.session_state.current_page == "🔥 Trending":
 
 elif st.session_state.current_page == "⭐ Popular":
     st.markdown("# ⭐ Popular Movies")
-    st.markdown("<p style='color: #A7B0C0; margin-top: -10px;'>Worldwide most-watched films right now.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #9BA7B5; margin-top: -10px;'>Worldwide most-watched films right now.</p>", unsafe_allow_html=True)
     render_movie_grid(get_popular(), cols_per_row=4, key_prefix="pop_page_")
 
 elif st.session_state.current_page == "🎬 Now Playing":
     st.markdown("# 🎬 Now Playing in Theaters")
-    st.markdown("<p style='color: #A7B0C0; margin-top: -10px;'>Catch the latest theatrical screenings.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #9BA7B5; margin-top: -10px;'>Catch the latest theatrical screenings.</p>", unsafe_allow_html=True)
     render_movie_grid(get_now_playing(), cols_per_row=4, key_prefix="now_page_")
 
 elif st.session_state.current_page == "🏆 Top Rated":
     st.markdown("# 🏆 All-Time Top Rated")
-    st.markdown("<p style='color: #A7B0C0; margin-top: -10px;'>Highest rated cinema masterpieces of all time.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #9BA7B5; margin-top: -10px;'>Highest rated cinema masterpieces of all time.</p>", unsafe_allow_html=True)
     with st.expander("Filter Top Rated", expanded=False):
         c1, c2 = st.columns(2)
         with c1:
@@ -1386,7 +1519,7 @@ elif st.session_state.current_page == "🏆 Top Rated":
 
 elif st.session_state.current_page == "🎭 Genres":
     st.markdown("# 🎭 Browse by Genre")
-    st.markdown("<p style='color: #A7B0C0; margin-top: -10px;'>Select any genre to explore curated titles.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #9BA7B5; margin-top: -10px;'>Select any genre to explore curated titles.</p>", unsafe_allow_html=True)
 
     GENRE_ICONS = {
         "Action": "💥", "Adventure": "🗺️", "Animation": "🎨", "Comedy": "😂",
@@ -1418,7 +1551,7 @@ elif st.session_state.current_page == "🎭 Genres":
 
 elif st.session_state.current_page == "🔍 Search":
     st.markdown("# 🔍 Search Movies")
-    st.markdown("<p style='color: #A7B0C0; margin-top: -10px;'>Search by title or storyline keywords.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #9BA7B5; margin-top: -10px;'>Search by title or storyline keywords.</p>", unsafe_allow_html=True)
 
     sc1, sc2 = st.columns([4.5, 1])
     with sc1:
@@ -1441,16 +1574,16 @@ elif st.session_state.current_page == "🔍 Search":
 
 elif st.session_state.current_page.startswith("❤️ My Watchlist"):
     st.markdown("# ❤️ My Personal Watchlist")
-    st.markdown("<p style='color: #A7B0C0; margin-top: -10px;'>Your saved collection of movies.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #9BA7B5; margin-top: -10px;'>Your saved collection of movies.</p>", unsafe_allow_html=True)
 
     wl = st.session_state.watchlist
     if not wl:
         st.markdown(
             """
-            <div style="text-align: center; padding: 4rem 1.5rem; background: #0B1628; border-radius: 16px; border: 1px dashed #1A2B45; margin-top: 1.5rem;">
+            <div style="text-align: center; padding: 4rem 1.5rem; background: #111720; border-radius: 16px; border: 1px dashed #27313D; margin-top: 1.5rem;">
                 <div style="font-size: 3.5rem; margin-bottom: 12px;">🍿</div>
-                <h2 style="color: #FFFFFF; margin-bottom: 8px;">Your Watchlist is Empty</h2>
-                <p style="color: #A7B0C0; max-width: 480px; margin: 0 auto 1.5rem auto;">
+                <h2 style="color: #F5F7FA; margin-bottom: 8px;">Your Watchlist is Empty</h2>
+                <p style="color: #9BA7B5; max-width: 480px; margin: 0 auto 1.5rem auto;">
                     Browse movies and click "<b>+ List</b>" or "<b>❤️ Add to Watchlist</b>" to save them here.
                 </p>
             </div>
@@ -1476,7 +1609,7 @@ elif st.session_state.current_page.startswith("❤️ My Watchlist"):
 
 elif st.session_state.current_page == "🤖 Recommendations":
     st.markdown("# 🤖 Smart Recommendations")
-    st.markdown("<p style='color: #A7B0C0; margin-top: -10px;'>Discover movies tailored to your mood and watchlist taste.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #9BA7B5; margin-top: -10px;'>Discover movies tailored to your mood and watchlist taste.</p>", unsafe_allow_html=True)
 
     tab1, tab2 = st.tabs(["🎯 By Mood & Preferences", "❤️ Based on My Watchlist"])
     with tab1:
@@ -1502,19 +1635,19 @@ elif st.session_state.current_page == "ℹ️ About":
     st.markdown("# ℹ️ About Movie Hub")
     st.markdown(
         """
-        <div style="background: #0B1628; border: 1px solid #1A2B45; border-radius: 14px; padding: 2rem; margin-top: 1rem;">
-            <h2 style="color: #FFFFFF; margin-bottom: 8px;">🎬 Movie Hub</h2>
-            <p style="color: #2D8CFF; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem;">
+        <div style="background: #111720; border: 1px solid #27313D; border-radius: 14px; padding: 2rem; margin-top: 1rem;">
+            <h2 style="color: #F5F7FA; margin-bottom: 8px;">🎬 Movie Hub</h2>
+            <p style="color: #79BDF2; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem;">
                 Discover • Explore • Watch
             </p>
-            <p style="color: #E2E8F0; line-height: 1.7; margin-top: 1rem;">
+            <p style="color: #D2D8DE; line-height: 1.7; margin-top: 1rem;">
                 <b>Movie Hub</b> is a modern movie discovery and recommendation platform built with <b>Python and Streamlit</b>.
                 It features a cinematic Dark Blue + Black visual identity, real-time TMDB integration, personal watchlist management,
                 official YouTube trailer playback, and content-based recommendations.
             </p>
-            <hr style="border-color: #1A2B45; margin: 1.5rem 0;" />
-            <h4 style="color: #FFFFFF; margin-bottom: 8px;">⚖️ Data Attribution & Disclaimer</h4>
-            <p style="font-size: 0.85rem; color: #A7B0C0; line-height: 1.6;">
+            <hr style="border-color: #27313D; margin: 1.5rem 0;" />
+            <h4 style="color: #F5F7FA; margin-bottom: 8px;">⚖️ Data Attribution & Disclaimer</h4>
+            <p style="font-size: 0.85rem; color: #9BA7B5; line-height: 1.6;">
                 This product uses the TMDB API but is not endorsed or certified by TMDB.<br>
                 <b>Movie Hub does NOT host, stream, or distribute copyrighted video files.</b>
                 All trailers and media are linked directly to official YouTube embeds and legitimate metadata sources.
